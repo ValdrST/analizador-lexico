@@ -6,14 +6,14 @@
 %% option noyywrap
 %% option yylineno
 
-letra [a-zA−Z]
+letra [a-zA-Z]
 espacio [\t \n }]
 esps {espacio}
 digito [0-9]
 letra_digito [a-zA-Z0-9_/()=$!'&|°\-+\{\}\[\].:,;\~\^]
 cadena (\"[letra_digito]*\")
-caracter (\'[letra_digito\')
-id [a-zA-Z_][a-zA-Z0-9_]*
+caracter ('[letra_digito')
+id [a-zA-Z_][a-zA-Z0-9\_]*
 
 %%
 {digito} return NUM;
@@ -63,9 +63,9 @@ id [a-zA-Z_][a-zA-Z0-9_]*
 "car" return CAR;
 "sin" return SIN;
 "sino" return SINO;
-"mientras" return MIENTRAS;
-{esps} {/* Ignorar los espacios en blanco */}
-. error();
+"mientras" {return MIENTRAS};
+{esps} {/* Ignorar los espacios en blanco */};
+. {error()};
 %%
 
 void error(){
@@ -73,6 +73,7 @@ void error(){
 }
 
 int main(){
+    int token;
     yyin = fopen(s,"r");
     yyout = fopen(o,"w");
     int comentario_multilinea = 0;

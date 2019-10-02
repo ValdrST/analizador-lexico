@@ -1,5 +1,6 @@
 #ifndef TOKENS_H
 #define TOKENS_H
+#endif
 
 #define BASE 2
 #define REGISTRO 3
@@ -11,7 +12,6 @@
 #define SI 9
 #define HACER 10
 #define MIENTRAS_QUE 11
-#define HACER 12
 #define ESCRIBIR 13
 #define LEER 14
 #define DEVOLVER 15
@@ -47,6 +47,5 @@
 #define REAL 49
 #define DREAL 50
 #define CAR 51
-#define SIN 52
 #define SINO 53
 #define MIENTRAS 54
