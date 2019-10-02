@@ -658,7 +658,7 @@ YY_DECL
 		}
 
 	{
-#line 6 "practica_3.l"
+#line 5 "practica_3.l"
 
 #line 663 "lex.yy.c"
 
@@ -719,7 +719,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 7 "practica_3.l"
+#line 6 "practica_3.l"
 ECHO;
 	YY_BREAK
 #line 725 "lex.yy.c"
@@ -1727,22 +1727,21 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 7 "practica_3.l"
+#line 6 "practica_3.l"
 
-
-letra [a-zA-Z]
-espacio [\t \n }]
+letra [a-z]|[A-Z]
+espacio [\t \n]
 esps {espacio}
 digito [0-9]
 letra_digito [a-zA-Z0-9_/()=$!'&|°\-+\{\}\[\].:,;\~\^]
-cadena (\"[letra_digito]*\")
-caracter ('[letra_digito')
-id [a-zA-Z_][a-zA-Z0-9\_]*
+cadena ("[letra_digito]*")
+caracter ('\[letra_digito')
+id [a-zA-Z_][_a-zA-Z0-9]*
 
 %%
-{digito} return NUM;
-"registro" return REGISTRO;
-"fin" return FIN;
+{digito}+ {return NUM};
+registro {return REGISTRO};
+fin return FIN;
 "inicio" return INICIO;
 {id} return ID;
 "\n" return SALTO ;
@@ -1787,7 +1786,7 @@ id [a-zA-Z_][a-zA-Z0-9\_]*
 "car" return CAR;
 "sin" return SIN;
 "sino" return SINO;
-"mientras" {return MIENTRAS};
+mientras return MIENTRAS;
 {esps} {/* Ignorar los espacios en blanco */};
 . {error()};
 %%
@@ -1796,15 +1795,17 @@ void error(){
     print("Error lexico en %s, linea %d",yytext,yylineno);
 }
 
-int main(){
+int main(int argc,char **argv){
     int token;
-    yyin = fopen(s,"r");
-    yyout = fopen(o,"w");
+    char ctoken[3];
+    yyin = fopen(argv[1],"r");
+    yyout = fopen(argv[2],"w");
     int comentario_multilinea = 0;
     int comentario_linea = 0;
     while((token=yylex())!=0){
+        sprintf(ctoken,"%d",token);
         if(!comentario_linea && !comentario_multilinea){
-            fputs(token,yyout);
+            fputs(ctoken,yyout);
             printf("<%d-%s>\n",token,yytext);
             switch(token){
             case MENOS_MENOS:
