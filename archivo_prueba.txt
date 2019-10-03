@@ -1,0 +1,4 @@
+registro
+inicio ent _entero <* comentario
+de varias lineas *>
+fin

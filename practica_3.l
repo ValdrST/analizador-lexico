@@ -1,5 +1,6 @@
 %{
 #include <stdio.h>
+#include <string.h>
 #include "tokens.h"
 %}
 
@@ -67,6 +68,7 @@ void error(){
     printf("Error lexico en %s, linea %d",yytext,yylineno);
 }
 
+
 int main(int argc,char **argv){
     int token;
     char ctoken[3];
@@ -79,8 +81,11 @@ int main(int argc,char **argv){
         return 1;
     }
     yyout = fopen(argv[2],"w");
-    if(yyout == 0){
+    if(yyout == 0 && argv[2] != NULL){
         printf("No se pudo crear el archivo %s\n",argv[2]);
+        return 1;
+    }else if(yyout == NULL){
+        printf("el archivo de salida es nulo\n");
         return 1;
     }
     
@@ -89,7 +94,7 @@ int main(int argc,char **argv){
     while((token=yylex())!=0){
         sprintf(ctoken,"%d",token);
         if(!comentario_linea && !comentario_multilinea){
-            fputs(ctoken,yyout);
+            fprintf(yyout,"%s ",ctoken);
             printf("<%d-%s>\n",token,yytext);
             switch(token){
             case MENOS_MENOS:
@@ -104,8 +109,11 @@ int main(int argc,char **argv){
         }else if(comentario_linea){
             comentario_linea = 0;
         }else if(comentario_multilinea){
-            if(token != COMENTARIO_CIERRA)
+            if(token == COMENTARIO_CIERRA){
+                fprintf(yyout,"%s ",ctoken);
+                printf("<%d-%s>\n",token,yytext);
                 comentario_multilinea = 0;
+            }
         }
     }
     return 0;
