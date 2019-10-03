@@ -1,7 +1,7 @@
 #ifndef TOKENS_H
 #define TOKENS_H
 #endif
-
+#define LERROR -1
 #define BASE 2
 #define REGISTRO 3
 #define FIN 4
@@ -11,7 +11,7 @@
 #define ENTONCES 8
 #define SI 9
 #define HACER 10
-#define MIENTRAS_QUE 11
+#define QUE 11
 #define ESCRIBIR 13
 #define LEER 14
 #define DEVOLVER 15
