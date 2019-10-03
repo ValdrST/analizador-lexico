@@ -107,7 +107,8 @@ int main(int argc,char **argv){
                 break;
             }
         }else if(comentario_linea){
-            comentario_linea = 0;
+            if(token = SALTO)
+                comentario_linea = 0;
         }else if(comentario_multilinea){
             if(token == COMENTARIO_CIERRA){
                 fprintf(yyout,"%s ",ctoken);
